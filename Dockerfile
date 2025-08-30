@@ -1,14 +1,10 @@
-FROM alpine:3.16
+FROM alpine:latest
 
-RUN apk add --no-cache \
-    shadowsocks-libev \
-    curl \
-    unzip \
-    && curl -L -o /tmp/v2ray-plugin.zip https://github.com/shadowsocks/v2ray-plugin/releases/latest/download/v2ray-plugin-linux-amd64.zip \
-    && unzip /tmp/v2ray-plugin.zip -d /usr/local/bin \
-    && chmod +x /usr/local/bin/v2ray-plugin \
-    && rm -rf /tmp/*
+RUN sed -i -e 's@http:@https:@g' /etc/apk/repositories \
+    && apk update \
+    && apk add --no-cache shadowsocks-libev v2ray-plugin
 
 EXPOSE 443
 
 CMD ["ss-server", "-c", "/etc/secrets/config.json"]
+
