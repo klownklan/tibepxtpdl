@@ -11,4 +11,4 @@ RUN apk add --no-cache \
 
 EXPOSE 443
 
-CMD ["ss-server", "-c", "/etc/shadowsocks/config.json"]
+CMD ["ss-server", "-c", "/etc/secrets/config.json"]
